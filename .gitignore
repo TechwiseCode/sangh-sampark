@@ -1,0 +1,39 @@
+# Secrets & local env
+.env
+.env.*
+!.env.example
+!deploy/env/.env.server.template
+!deploy/env/.env.local.template
+config/database.local.php
+deploy/env/.env.production
+
+# Dependencies
+/vendor/
+/node_modules/
+
+# Runtime / uploads / queues
+/storage/rate_limits/*.json
+!/storage/rate_limits/.gitkeep
+!/storage/rate_limits/.htaccess
+/storage/deferred_emails/*.json
+!/storage/deferred_emails/.gitkeep
+!/storage/deferred_emails/.htaccess
+/storage/logs/
+/storage/cache/
+/storage/uploads/
+/public/uploads/
+/uploads/
+
+# Backups & deploy artifacts
+/database/backups/
+*.zip
+*_cookies.txt
+_test_cookies.txt
+
+# OS / IDE
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.swp
+*.log

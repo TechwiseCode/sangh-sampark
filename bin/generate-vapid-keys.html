@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Generate VAPID keys (offline)</title>
+  <style>
+    body { font-family: system-ui, sans-serif; max-width: 42rem; margin: 2rem auto; padding: 0 1rem; color: #222; }
+    h1 { font-size: 1.35rem; }
+    p, li { line-height: 1.5; }
+    textarea { width: 100%; min-height: 4.5rem; font-family: ui-monospace, monospace; font-size: 0.85rem; }
+    button { margin: 0.5rem 0.5rem 0.5rem 0; padding: 0.55rem 1rem; cursor: pointer; }
+    .box { background: #f6f8fa; border: 1px solid #e1e4e8; border-radius: 6px; padding: 1rem; margin: 1rem 0; }
+    label { display: block; font-weight: 600; margin-bottom: 0.35rem; font-size: 0.9rem; }
+    .warn { background: #fff8e6; border-color: #f0d78c; }
+    code { background: #eee; padding: 0.1rem 0.35rem; border-radius: 3px; }
+  </style>
+</head>
+<body>
+  <h1>Generate VAPID keys (runs in your browser)</h1>
+  <p>Use this when you have <strong>no SSH / Terminal</strong> on shared hosting. Keys are created on your computer — nothing is sent to any server.</p>
+  <ol>
+    <li>Click <strong>Generate keys</strong>.</li>
+    <li>Copy the <code>.env</code> block into your server <code>.env</code> file (cPanel File Manager).</li>
+    <li>Keep the <strong>private key</strong> secret. Delete this file from production if you upload it by mistake.</li>
+  </ol>
+
+  <button type="button" id="generate_btn">Generate keys</button>
+  <button type="button" id="copy_btn" disabled>Copy .env block</button>
+
+  <div class="box warn">
+    <strong>Subject:</strong> use your real email or site URL (required for push services).
+    <input type="text" id="subject" value="mailto:admin@sanghsampark.com" style="width:100%;margin-top:0.5rem;padding:0.45rem;">
+  </div>
+
+  <div class="box" id="output_box" style="display:none;">
+    <label for="env_block">Paste into server <code>.env</code></label>
+    <textarea id="env_block" readonly></textarea>
+  </div>
+
+  <script>
+  (function () {
+    function base64UrlEncode(buffer) {
+      var bytes = new Uint8Array(buffer);
+      var binary = '';
+      for (var i = 0; i < bytes.length; i++) {
+        binary += String.fromCharCode(bytes[i]);
+      }
+      return btoa(binary).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/g, '');
+    }
+
+    async function exportVapidKeys(keyPair) {
+      var publicJwk = await crypto.subtle.exportKey('jwk', keyPair.publicKey);
+      var privateJwk = await crypto.subtle.exportKey('jwk', keyPair.privateKey);
+      var x = base64UrlDecode(publicJwk.x);
+      var y = base64UrlDecode(publicJwk.y);
+      var publicKeyBytes = new Uint8Array(65);
+      publicKeyBytes[0] = 0x04;
+      publicKeyBytes.set(new Uint8Array(x), 1);
+      publicKeyBytes.set(new Uint8Array(y), 33);
+      return {
+        publicKey: base64UrlEncode(publicKeyBytes.buffer),
+        privateKey: privateJwk.d
+      };
+    }
+
+    function base64UrlDecode(str) {
+      str = str.replace(/-/g, '+').replace(/_/g, '/');
+      while (str.length % 4) str += '=';
+      var binary = atob(str);
+      var bytes = new Uint8Array(binary.length);
+      for (var i = 0; i < binary.length; i++) bytes[i] = binary.charCodeAt(i);
+      return bytes.buffer;
+    }
+
+    var generateBtn = document.getElementById('generate_btn');
+    var copyBtn = document.getElementById('copy_btn');
+    var subjectEl = document.getElementById('subject');
+    var envBlock = document.getElementById('env_block');
+    var outputBox = document.getElementById('output_box');
+
+    generateBtn.addEventListener('click', async function () {
+      generateBtn.disabled = true;
+      try {
+        var keyPair = await crypto.subtle.generateKey(
+          { name: 'ECDSA', namedCurve: 'P-256' },
+          true,
+          ['sign']
+        );
+        var keys = await exportVapidKeys(keyPair);
+        var subject = (subjectEl.value || 'mailto:admin@example.com').trim();
+        var block = 'VAPID_PUBLIC_KEY=' + keys.publicKey + '\n'
+          + 'VAPID_PRIVATE_KEY=' + keys.privateKey + '\n'
+          + 'VAPID_SUBJECT=' + subject + '\n';
+        envBlock.value = block;
+        outputBox.style.display = 'block';
+        copyBtn.disabled = false;
+      } catch (err) {
+        alert('Could not generate keys: ' + (err && err.message ? err.message : err));
+      }
+      generateBtn.disabled = false;
+    });
+
+    copyBtn.addEventListener('click', function () {
+      envBlock.select();
+      document.execCommand('copy');
+      copyBtn.textContent = 'Copied!';
+      setTimeout(function () { copyBtn.textContent = 'Copy .env block'; }, 2000);
+    });
+  })();
+  </script>
+</body>
+</html>

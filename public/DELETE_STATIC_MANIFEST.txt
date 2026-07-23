@@ -1,0 +1,12 @@
+IMPORTANT — delete this file on the server if it exists:
+
+  public/manifest.json
+
+That static file overrides the PHP route and breaks PWA install.
+After deleting it, open:
+
+  https://YOUR-DOMAIN/sanghsampark/public/manifest.json
+
+You should see absolute URLs (start_url, icons) — not "./" relative paths.
+
+The .htaccess rewrite also forces manifest.json through index.php.

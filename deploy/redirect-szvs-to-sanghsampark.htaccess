@@ -1,0 +1,12 @@
+# Place this file as .htaccess in the OLD /szvs folder on the server (or in the
+# site root) so bookmarks to techwise-apps.com/szvs/... redirect to sanghsampark.
+#
+# Rename the app folder: szvs → sanghsampark
+# Then set production .env:
+#   APP_URL=https://techwise-apps.com/sanghsampark/public
+#   ASSET_URL=https://techwise-apps.com/sanghsampark
+
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteRule ^(.*)$ https://techwise-apps.com/sanghsampark/$1 [R=301,L]
+</IfModule>

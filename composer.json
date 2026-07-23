@@ -1,0 +1,26 @@
+{
+	"description": "REST Server for the CodeIgniter framework",
+	"name": "chriskacerguis/codeigniter-restserver",
+	"type": "project",
+	"homepage": "https://github.com/chriskacerguis/codeigniter-restserver",
+    "authors": [
+		{
+			"name": "Chris Kacerguis",
+			"role": "Developer"
+		}
+	],
+	"license": "MIT",
+	"support": {
+		"source": "https://github.com/chriskacerguis/codeigniter-restserver"
+	},
+	"require": {
+		"google/apiclient": "^2.0",
+		"phpmailer/phpmailer": "^6.8",
+		"league/oauth2-google": "^4.0",
+		"takielias/codeigniter-websocket": "^1.0",
+		"spomky-labs/otphp": "^10.0",
+		"endroid/qr-code": "^4.6",
+		"dompdf/dompdf": "^3.1",
+		"minishlink/web-push": "7.0"
+	}
+}

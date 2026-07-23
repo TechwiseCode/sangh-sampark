@@ -1,0 +1,39 @@
+# Mail fix v6 — ONLINE SERVER
+
+## Verify deploy FIRST
+
+Open in browser:
+https://YOUR-DOMAIN/public/mail/ping
+
+Must show: {"ok":true,"mail_pipeline":"v6"}
+If not — old files still on server. Re-upload sanghsampark-mail-fix.zip.
+
+## What v6 fixes
+
+- Invite / forgot-password emails are sent during the same request (no lost queue files)
+- Failed SMTP no longer deletes queued emails
+- Background PHP script + cron still retry if the first send fails
+- Admin create waits for mail drain before redirect
+
+## Server setup (required)
+
+1. chmod 775 storage/deferred_emails
+2. SMTP in .env on the SERVER (not only local WAMP):
+   SMTP_HOST=smtp.gmail.com
+   SMTP_PORT=587
+   SMTP_USER=your@gmail.com
+   SMTP_PASS=your-app-password
+   MAIL_FROM=your@gmail.com
+3. Cron every minute (backup):
+   * * * * * cd /path/to/project && php scripts/process_deferred_emails.php >> /dev/null 2>&1
+
+## Test SMTP on the server (SSH)
+
+php scripts/mail_config_check.php
+php scripts/test_mail.php your@email.com
+
+If test_mail fails, fix .env on the server — the app cannot send until SMTP works there.
+
+## After deploy
+
+Create admin → brief pause on "Sending invite email…" → redirect → check inbox/spam.

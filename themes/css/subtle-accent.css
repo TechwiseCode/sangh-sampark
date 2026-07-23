@@ -1,0 +1,242 @@
+/**
+ * Subtle brand accents (SanghSampark teal).
+ *
+ * Revert options (pick one):
+ *   1. Set SUBTLE_ACCENT=false in .env
+ *   2. Remove the subtle-accent.css link from layouts
+ *   3. Delete this file
+ *
+ * All rules require body.subtle-accent — without that class, nothing applies.
+ */
+
+body.subtle-accent {
+    --accent: #34B1AA;
+    --accent-dark: #2a9d96;
+    --accent-deep: #238f89;
+    --accent-soft: #e8f7f6;
+    --accent-softer: #f4fbfa;
+    --accent-muted: #5a9e98;
+    --accent-border: rgba(52, 177, 170, 0.3);
+    --accent-focus: rgba(52, 177, 170, 0.2);
+    --saas-page-title-color: #1f2937;
+    --saas-subtitle-color: #2a9d96;
+}
+
+/* ——— Buttons ——— */
+body.subtle-accent .btn-primary {
+    background-color: var(--accent);
+    border-color: var(--accent-dark);
+    box-shadow: 0 1px 2px rgba(42, 157, 150, 0.18);
+}
+
+body.subtle-accent .btn-primary:hover,
+body.subtle-accent .btn-primary:focus,
+body.subtle-accent .btn-primary:active {
+    background-color: var(--accent-dark);
+    border-color: var(--accent-deep);
+}
+
+body.subtle-accent .btn-outline-primary {
+    color: var(--accent-dark);
+    border-color: var(--accent-border);
+}
+
+body.subtle-accent .btn-outline-primary:hover,
+body.subtle-accent .btn-outline-primary:focus {
+    background-color: var(--accent-soft);
+    border-color: var(--accent);
+    color: var(--accent-deep);
+}
+
+body.subtle-accent .btn-light {
+    border-color: #e5e7eb;
+}
+
+/* ——— Forms ——— */
+body.subtle-accent .form-control:focus,
+body.subtle-accent select.form-control:focus,
+body.subtle-accent textarea.form-control:focus,
+body.subtle-accent .custom-select:focus {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 0.2rem var(--accent-focus);
+}
+
+body.subtle-accent .content-wrapper label,
+body.subtle-accent .card-body label,
+body.subtle-accent .modal-body label {
+    color: #3d4f5f;
+    font-weight: 600;
+}
+
+body.subtle-accent .form-check-input:checked {
+    background-color: var(--accent);
+    border-color: var(--accent);
+}
+
+body.subtle-accent .form-check-input:focus {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 0.2rem var(--accent-focus);
+}
+
+/* ——— Cards ——— */
+body.subtle-accent .content-wrapper .card {
+    border-color: #e8ecef;
+    box-shadow: 0 1px 3px rgba(15, 23, 42, 0.04);
+}
+
+body.subtle-accent .content-wrapper .card > .card-body > .card-title,
+body.subtle-accent .content-wrapper .card > .card-body > h4.card-title {
+    color: var(--saas-subtitle-color, #2a9d96);
+    border-bottom: 2px solid var(--accent-soft);
+    padding-bottom: 0.5rem;
+}
+
+/* ——— Tables ——— */
+body.subtle-accent .content-wrapper .table thead th {
+    background-color: var(--accent-softer);
+    color: #2d5a56;
+    border-bottom: 2px solid var(--accent-border);
+    font-weight: 600;
+    vertical-align: middle;
+}
+
+body.subtle-accent .content-wrapper .table-striped > tbody > tr:nth-of-type(odd) > * {
+    background-color: #fafcfc;
+}
+
+body.subtle-accent .content-wrapper .table-hover tbody tr:hover > * {
+    background-color: var(--accent-soft);
+}
+
+body.subtle-accent .content-wrapper .table-bordered {
+    border-color: #e9ecef;
+}
+
+body.subtle-accent .content-wrapper .table-bordered td,
+body.subtle-accent .content-wrapper .table-bordered th {
+    border-color: #eef2f4;
+}
+
+body.subtle-accent .content-wrapper .table tfoot tr {
+    background-color: var(--accent-softer);
+}
+
+/* ——— Tabs ——— */
+body.subtle-accent .nav-tabs {
+    border-bottom-color: var(--accent-border);
+}
+
+body.subtle-accent .nav-tabs .nav-link {
+    color: #5c6b7a;
+}
+
+body.subtle-accent .nav-tabs .nav-link:hover {
+    border-color: var(--accent-soft) var(--accent-soft) var(--accent-border);
+    color: var(--accent-dark);
+}
+
+body.subtle-accent .nav-tabs .nav-link.active {
+    color: var(--accent-dark);
+    background-color: var(--accent-softer);
+    border-color: var(--accent-border) var(--accent-border) #fff;
+    font-weight: 600;
+}
+
+/* ——— Alerts ——— */
+body.subtle-accent .alert-success {
+    background-color: var(--accent-softer);
+    border-color: var(--accent-border);
+    border-left: 4px solid var(--accent);
+    color: #1f4f4b;
+}
+
+body.subtle-accent .alert-danger {
+    border-left: 4px solid #e55353;
+}
+
+body.subtle-accent .alert-warning {
+    border-left: 4px solid #e9a23b;
+}
+
+/* ——— Sidebar ——— */
+body.subtle-accent .sidebar .nav .nav-item.active > .nav-link {
+    background: var(--accent-soft);
+    color: var(--accent-deep);
+}
+
+body.subtle-accent .sidebar .nav .nav-item.active > .nav-link .menu-title,
+body.subtle-accent .sidebar .nav .nav-item.active > .nav-link i {
+    color: var(--accent-deep);
+}
+
+body.subtle-accent .sidebar .nav:not(.sub-menu) > .nav-item:hover > .nav-link {
+    background: var(--accent-softer);
+}
+
+/* ——— Dashboard stats ——— */
+body.subtle-accent .dash-stat-card--accent {
+    border-color: var(--accent-border);
+    background: linear-gradient(180deg, var(--accent-softer) 0%, #fff 100%);
+}
+
+body.subtle-accent .dash-header {
+    border-bottom-color: var(--accent-border);
+}
+
+body.subtle-accent .dash-header-title {
+    color: var(--saas-page-title-color, #1f2937);
+}
+
+/* ——— Auth pages ——— */
+body.subtle-accent .auth-form-light {
+    border-top: 3px solid var(--accent);
+    box-shadow: 0 4px 18px rgba(52, 177, 170, 0.08);
+}
+
+body.subtle-accent .locale-switcher-btn.is-active {
+    background: var(--accent);
+}
+
+/* ——— Donations / custom toggles (when accent on) ——— */
+body.subtle-accent .donations-type-option.is-selected,
+body.subtle-accent .donations-type-option:has(.donations-type-input:checked) {
+    border-color: var(--accent);
+    background: var(--accent-soft);
+    color: var(--accent-deep);
+}
+
+body.subtle-accent .donations-check-option.is-selected,
+body.subtle-accent .donations-check-option:has(.donations-check-input:checked) {
+    border-color: var(--accent);
+    background: var(--accent-soft);
+}
+
+body.subtle-accent .donations-payment-panel {
+    background: var(--accent-softer);
+    border-color: var(--accent-border);
+}
+
+/* ——— Badges (soften defaults) ——— */
+body.subtle-accent .badge-success {
+    background-color: #2a9d96;
+    color: #fff;
+    border-color: #2a9d96;
+}
+
+body.subtle-accent .badge-danger {
+    background-color: #c82333;
+    color: #fff;
+    border-color: #c82333;
+}
+
+body.subtle-accent .badge-warning {
+    background-color: #e9a23b;
+    color: #fff;
+    border-color: #e9a23b;
+}
+
+body.subtle-accent .badge-info {
+    background-color: #4a9fd4;
+    color: #fff;
+    border-color: #4a9fd4;
+}
