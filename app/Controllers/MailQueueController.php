@@ -25,6 +25,6 @@ final class MailQueueController extends Controller
 
     public function ping(Request $request): void
     {
-        json_response(['ok' => true, 'mail_pipeline' => 'v7']);
+        json_response(['ok' => true, 'mail_pipeline' => 'v8-git']);
     }
 }
